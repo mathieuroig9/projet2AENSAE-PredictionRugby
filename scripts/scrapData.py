@@ -369,3 +369,59 @@ def data18(url):
 # # Homogénéisation des tableaux formes entre les années : changer V D des années 2022/2023 à 2024/2025
 
 # # forme25 = forme25.replace({'V':'G', 'D':'P'})
+
+
+# Résolution du problème de l'exctraction du tableau résultat à intégrer à data18
+url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017"
+response = requests.get(url)
+soup = BeautifulSoup(response.content, "html.parser")
+# tables = soup.find_all("table", {"class": "wikitable"})
+# for i, table in enumerate(tables):
+#     print(f"Table {i}:")
+#     print(pd.read_html(str(table))[0].head())
+#     print("\n")
+tables = soup.find_all("table")
+
+# Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
+table_7 = tables[9]  # Les indices commencent à 0
+
+# Étape 4 : Convertir la table HTML en DataFrame
+data = []
+rows = table_7.find_all('tr')
+for row in rows:
+    cols = row.find_all(['th', 'td'])
+    cols = [col.text.strip() for col in cols]  # Nettoyer le texte
+    data.append(cols)
+
+# Créer un DataFrame pandas
+df = pd.DataFrame(data)
+
+# Étape 5 : Enregistrer en CSV ou manipuler les données
+df.to_csv("table_7.csv", index=False)
+print(df)
+
+# Résolution du problème de l'exctraction du tableau résultat à intégrer à data1920
+# url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020"
+# response = requests.get(url)
+# soup = BeautifulSoup(response.content, "html.parser")
+
+# tables = soup.find_all("table")
+
+# Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
+# table_7 = tables[7]  # Les indices commencent à 0
+
+# # Étape 4 : Convertir la table HTML en DataFrame
+# data = []
+# rows = table_7.find_all('tr')
+# for row in rows:
+#     cols = row.find_all(['th', 'td'])
+#     cols = [col.text.strip() for col in cols]  # Nettoyer le texte
+#     data.append(cols)
+
+# # Créer un DataFrame pandas
+# df = pd.DataFrame(data)
+
+# # Étape 5 : Enregistrer en CSV ou manipuler les données
+# df.to_csv("table_7.csv", index=False)
+# print(df)
+
