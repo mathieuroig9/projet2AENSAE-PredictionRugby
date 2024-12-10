@@ -27,7 +27,7 @@ def data23(url, year):
     evolution_classement = pd.read_html(StringIO(str(tables[30])))[0]
     forme = pd.read_html(StringIO(str(tables[31])))[0]
 
-    # === ETAPE 2 : NETTOYAGE DES DONNEES ===
+    # === ETAPE 2 : SÉLECTION DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e,2e,.. en 1,2,..
     presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'a', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025']
     presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -68,7 +68,7 @@ resultats24 = pd.read_html(StringIO(str(tables[3])))[0]
 evolution_classement24 = pd.read_html(StringIO(str(tables[30])))[0]
 forme24 = pd.read_html(StringIO(str(tables[31])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation24.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2022-2023', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2023-2024']
 presentation24["Capacité"] = presentation24["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -113,7 +113,7 @@ resultats23 = pd.read_html(StringIO(str(tables[3])))[0]
 evolution_classement23 = pd.read_html(StringIO(str(tables[31])))[0]
 forme23 = pd.read_html(StringIO(str(tables[32])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation23.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2021-2022', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2022-2023']
 presentation23["Capacité"] = presentation23["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -149,7 +149,7 @@ resultats22 = pd.read_html(StringIO(str(tables[3])))[0]
 evolution_classement22 = pd.read_html(StringIO(str(tables[31])))[0]
 forme22 = pd.read_html(StringIO(str(tables[32])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation22.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2020-2021', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2021-2022']
 presentation22["Capacité"] = presentation22["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -196,7 +196,7 @@ resultats21 = pd.read_html(StringIO(str(tables[4])))[0]
 evolution_classement21 = pd.read_html(StringIO(str(tables[31])))[0]
 forme21 = pd.read_html(StringIO(str(tables[32])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation21.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2019-2020', 'Entraîneur en chef', 'Stade', 'Capacité']
 presentation21["Capacité"] = presentation21["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -239,7 +239,7 @@ classement20 = pd.read_html(StringIO(str(tables[1])))[0]
 evolution_classement20 = pd.read_html(StringIO(str(tables[28])))[0]
 forme20 = pd.read_html(StringIO(str(tables[29])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation20.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2018-2019', 'Entraîneur en chef', 'Stade', 'Capacité']
 presentation20["Capacité"] = presentation20["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -275,7 +275,7 @@ classement19 = pd.read_html(StringIO(str(tables[1])))[0]
 evolution_classement19 = pd.read_html(StringIO(str(tables[29])))[0]
 forme19 = pd.read_html(StringIO(str(tables[30])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation19.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2017-2018', 'Entraîneur en chef', 'Stade', 'Capacité']
 presentation19["Capacité"] = presentation19["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -307,7 +307,7 @@ classement18 = pd.read_html(StringIO(str(tables[1])))[0]
 evolution_classement18 = pd.read_html(StringIO(str(tables[29])))[0]
 forme18 = pd.read_html(StringIO(str(tables[30])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation18.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2016-2017', 'Entraîneur en chef', 'Stade', 'Capacité']
 presentation18["Capacité"] = presentation18["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
@@ -340,7 +340,7 @@ classement17 = pd.read_html(StringIO(str(tables[1])))[0]
 evolution_classement17 = pd.read_html(StringIO(str(tables[29])))[0]
 forme17 = pd.read_html(StringIO(str(tables[30])))[0]
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
+# === ETAPE 2 : SÉLECTION DES DONNEES ===
 # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
 presentation17.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2015-2016', 'Entraîneur en chef', 'Stade', 'Capacité']
 presentation17["Capacité"] = presentation17["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
