@@ -161,7 +161,7 @@ evolution_classement22 = evolution_classement22.iloc[:, :-2]
 evolution_classement22.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
 
 # forme : je donne un nom aux colonnes qui n'en ont pas
-forme22.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'JR1', 'J18', 'J19', 'J20', 'J21','JR2', 'JR3', 'J22', 'J23', 'J24', 'J25', 'J26']# Remarque : On passe de V/D(victoire/défaite) à G/P(gagné/perdu) dans le tableau forme à prendre en compte lorsqu'on ra le travail sur les données.
+forme22.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'JR1', 'J18', 'J19', 'J20', 'J21','JR2', 'JR3', 'J22', 'J23', 'J24', 'J25', 'J26']# Remarque : On passe de V/D(victoire/défaite) à G/P(gagné/perdu) dans le tableau forme à prendre en compte lorsqu'on fera le travail sur les données.
 
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
@@ -259,34 +259,35 @@ forme20.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7'
 
 # evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
 # forme = pd.read_html(StringIO(str(tables[30])))[0]
+def data18(url,année_inf):
+    # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    tables = soup.find_all("table", {"class": "wikitable"})
+    a = f'Classement {année_inf} {année_inf + 1}'
+    # il y a 37 tables mais seulement 5 nous intéressent
+    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    classement = pd.read_html(StringIO(str(tables[1])))[0]
+    # resultats19 = pd.read_html(StringIO(str(tables[3])))[0]
+    evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
+    forme = pd.read_html(StringIO(str(tables[30])))[0]
 
-url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019"
-response = requests.get(url)
-soup = BeautifulSoup(response.content, "html.parser")
-tables = soup.find_all("table", {"class": "wikitable"})
+    # === ETAPE 2 : NETTOYAGE DES DONNEES ===
+    # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', a, 'Entraîneur en chef', 'Stade', 'Capacité']
+    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
+    presentation[a] = presentation[a].apply(lambda x: re.sub(r"[^0-9]", "", x))
 
-# il y a 37 tables mais seulement 5 nous intéressent
-presentation19 = pd.read_html(StringIO(str(tables[0])))[0]
-classement19 = pd.read_html(StringIO(str(tables[1])))[0]
-# resultats19 = pd.read_html(StringIO(str(tables[3])))[0]
-evolution_classement19 = pd.read_html(StringIO(str(tables[29])))[0]
-forme19 = pd.read_html(StringIO(str(tables[30])))[0]
+    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
+    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
+    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
-# === ETAPE 2 : NETTOYAGE DES DONNEES ===
-# presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
-presentation19.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2017-2018', 'Entraîneur en chef', 'Stade', 'Capacité']
-presentation19["Capacité"] = presentation19["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-presentation19["Classement 2017-2018"] = presentation19["Classement 2017-2018"].apply(lambda x: re.sub(r"[^0-9]", "", x))
+    # evolution : je donne un nom aux colonnes qui n'en ont pas
+    evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
 
-# classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-classement19["Club"] = classement19["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-classement19["Club"] = classement19["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
-
-# evolution : je donne un nom aux colonnes qui n'en ont pas
-evolution_classement19.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
-
-# forme : je donne un nom aux colonnes qui n'en ont pas
-forme19.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
+    # forme : je donne un nom aux colonnes qui n'en ont pas
+    forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
+    return presentation, classement, evolution_classement, forme
 
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
@@ -352,3 +353,10 @@ evolution_classement17.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', '
 
 # forme : je donne un nom aux colonnes qui n'en ont pas
 forme17.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
+
+
+
+
+# Homogénéisation des tableaux formes entre les années : changer V D des années 2022/2023 à 2024/2025
+
+forme25 = forme25.replace({'V':'G', 'D':'P'})
