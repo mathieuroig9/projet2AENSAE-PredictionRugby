@@ -74,19 +74,16 @@ presentation24["Capacité"] = presentation24["Capacité"].apply(lambda x: int(x.
 presentation24["Classement 2022-2023"] = presentation24["Classement 2022-2023"].apply(lambda x: re.sub(r"[^0-9]", "", x))
 #apparition de C1 et C2 pour les vainqueurs des coupes européennes
 
-print(presentation24)
 
 # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
 classement24["Club"] = classement24["Club"].apply(lambda x: x.rstrip(" C1") if x.endswith(" C1") else x)
 classement24["Club"] = classement24["Club"].apply(lambda x: x.rstrip(" C2") if x.endswith(" C2") else x)
 classement24["Club"] = classement24["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
 classement24["Club"] = classement24["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
-print(classement24)
 
 # evolution : j'enlève les 3 dernières colonnes non utiles et je donne un nom aux colonnes qui n'en ont pas
 evolution_classement24 = evolution_classement24.iloc[:, :-3]
 evolution_classement24.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
-print(evolution_classement)
 
 # forme : je donne un nom aux colonnes qui n'en ont pas
 forme24.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
