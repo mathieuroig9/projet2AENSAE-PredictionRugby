@@ -13,9 +13,8 @@ subprocess.check_call([sys.executable, "-m", "pip", "install", "lxml"])
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2024/2025
-def data23(url, year):
+def data23(url):
     # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2024-2025"
-    a = f'Classement{year}{year+1}'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
@@ -29,9 +28,9 @@ def data23(url, year):
 
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e,2e,.. en 1,2,..
-    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'a', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025']
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025']
     presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation["a"] = presentation["a"].apply(lambda x: re.sub(r"[^0-9]", "", x))
+    presentation["Classement précédent"] = presentation["Classement précédent"].apply(lambda x: re.sub(r"[^0-9]", "", x))
     # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
     classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
     classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
@@ -262,12 +261,11 @@ forme20.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7'
 
 # evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
 # forme = pd.read_html(StringIO(str(tables[30])))[0]
-def data18(url,année_inf):
+def data18(url):
     # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
-    a = f'Classement {année_inf} {année_inf + 1}'
     # il y a 37 tables mais seulement 5 nous intéressent
     presentation = pd.read_html(StringIO(str(tables[0])))[0]
     classement = pd.read_html(StringIO(str(tables[1])))[0]
@@ -277,9 +275,9 @@ def data18(url,année_inf):
 
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
-    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', a, 'Entraîneur en chef', 'Stade', 'Capacité']
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
     presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation[a] = presentation[a].apply(lambda x: re.sub(r"[^0-9]", "", x))
+    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
 
     # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
     classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
@@ -362,4 +360,4 @@ forme17.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7'
 
 # Homogénéisation des tableaux formes entre les années : changer V D des années 2022/2023 à 2024/2025
 
-forme25 = forme25.replace({'V':'G', 'D':'P'})
+# forme25 = forme25.replace({'V':'G', 'D':'P'})
