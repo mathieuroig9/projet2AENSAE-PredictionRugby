@@ -248,7 +248,30 @@ def data1920(url):
 
     # forme : je donne un nom aux colonnes qui n'en ont pas
     forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
-    return presentation, classement, evolution_classement, forme
+
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    tables = soup.find_all("table")
+
+    # Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
+    table_7 = tables[7]  # Les indices commencent à 0
+
+    # Étape 4 : Convertir la table HTML en DataFrame
+    data = []
+    rows = table_7.find_all('tr')
+    for row in rows:
+        cols = row.find_all(['th', 'td'])
+        cols = [col.text.strip() for col in cols]  # Nettoyer le texte
+        data.append(cols)
+
+    # Créer un DataFrame pandas
+    df = pd.DataFrame(data)
+
+    # Étape 5 : Enregistrer en CSV ou manipuler les données
+    df.to_csv("table_7.csv", index=False)
+
+
+    return presentation, classement,df,  evolution_classement, forme
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2018/2019
@@ -283,7 +306,27 @@ def data18(url):
 
     # forme : je donne un nom aux colonnes qui n'en ont pas
     forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
-    return presentation, classement, evolution_classement, forme
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    tables = soup.find_all("table")
+
+    # Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
+    table_7 = tables[9]  # Les indices commencent à 0
+
+    # Étape 4 : Convertir la table HTML en DataFrame
+    data = []
+    rows = table_7.find_all('tr')
+    for row in rows:
+        cols = row.find_all(['th', 'td'])
+        cols = [col.text.strip() for col in cols]  # Nettoyer le texte
+        data.append(cols)
+
+    # Créer un DataFrame pandas
+    df = pd.DataFrame(data)
+
+    # Étape 5 : Enregistrer en CSV ou manipuler les données
+    df.to_csv("table_7.csv", index=False)
+    return presentation, classement, df, evolution_classement, forme
 
 
 # # === ETAPE 1 : IMPORTATION DONNEES ===
