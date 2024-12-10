@@ -157,6 +157,7 @@ classement22["Club"] = classement22["Club"].apply(lambda x: x.rstrip(" T") if x.
 classement22["Club"] = classement22["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
 # evolution : je donne un nom aux colonnes qui n'en ont pas
+evolution_classement22 = evolution_classement22.iloc[:, :-2]
 evolution_classement22.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
 
 # forme : je donne un nom aux colonnes qui n'en ont pas
@@ -314,7 +315,7 @@ classement18["Club"] = classement18["Club"].apply(lambda x: x.rstrip(" T") if x.
 classement18["Club"] = classement18["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
 # evolution : j'enlève les 3 dernières colonnes non utiles et je donne un nom aux colonnes qui n'en ont pas
-evolution_classement18 = evolution_classement18.iloc[:, :-3]
+
 evolution_classement18.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
 
 # forme : je donne un nom aux colonnes qui n'en ont pas
