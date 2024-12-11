@@ -123,7 +123,7 @@ def data2223(url):
     # forme : je donne un nom aux colonnes qui n'en ont pas
     forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
 
-    return presentation, classement, evolution_classement, forme
+    return presentation, classement,resultats, evolution_classement, forme
 
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
@@ -158,7 +158,7 @@ def data2122(url):
 
     # forme : je donne un nom aux colonnes qui n'en ont pas
     forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'JR1', 'J18', 'J19', 'J20', 'J21','JR2', 'JR3', 'J22', 'J23', 'J24', 'J25', 'J26']# Remarque : On passe de V/D(victoire/défaite) à G/P(gagné/perdu) dans le tableau forme à prendre en compte lorsqu'on fera le travail sur les données.
-    return presentation, classement, evolution_classement, forme
+    return presentation, classement,resultats, evolution_classement, forme
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2020/2021
@@ -177,7 +177,7 @@ def data2122(url):
 
 # Le tableau évolution du classement ne comporte pas de colonne après le jour 26, donc pas besoin de supprimer les colonnes
 def data2021(url):
-    url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2020-2021"
+    # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2020-2021"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
@@ -204,7 +204,7 @@ def data2021(url):
 
     # forme : je donne un nom aux colonnes qui n'en ont pas
     forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
-    return presentation, classement, evolution_classement, forme
+    return presentation, classement,resultats, evolution_classement, forme
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2019/2020
@@ -221,7 +221,7 @@ def data2021(url):
 
 # Remarque : Pour cette année à cause du covid les journées s'arrêtent à 17
 def data1920(url):
-    url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020"
+    # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
@@ -267,11 +267,11 @@ def data1920(url):
     # Créer un DataFrame pandas
     df = pd.DataFrame(data)
 
-    # Étape 5 : Enregistrer en CSV ou manipuler les données
-    df.to_csv("table_7.csv", index=False)
+    # # Étape 5 : Enregistrer en CSV ou manipuler les données
+    # df.to_csv("table_7.csv", index=False)
 
 
-    return presentation, classement,df,  evolution_classement, forme
+    return presentation, classement,df,evolution_classement, forme
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2018/2019
@@ -401,34 +401,34 @@ def data18(url):
 # # forme25 = forme25.replace({'V':'G', 'D':'P'})
 
 
-# Résolution du problème de l'exctraction du tableau résultat à intégrer à data18
-url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017"
-response = requests.get(url)
-soup = BeautifulSoup(response.content, "html.parser")
-# tables = soup.find_all("table", {"class": "wikitable"})
-# for i, table in enumerate(tables):
-#     print(f"Table {i}:")
-#     print(pd.read_html(str(table))[0].head())
-#     print("\n")
-tables = soup.find_all("table")
+# # Résolution du problème de l'exctraction du tableau résultat à intégrer à data18
+# url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017"
+# response = requests.get(url)
+# soup = BeautifulSoup(response.content, "html.parser")
+# # tables = soup.find_all("table", {"class": "wikitable"})
+# # for i, table in enumerate(tables):
+# #     print(f"Table {i}:")
+# #     print(pd.read_html(str(table))[0].head())
+# #     print("\n")
+# tables = soup.find_all("table")
 
-# Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
-table_7 = tables[9]  # Les indices commencent à 0
+# # Étape 3 : Sélectionner la 7ème table de n'importe qu'elle nature
+# table_7 = tables[9]  # Les indices commencent à 0
 
-# Étape 4 : Convertir la table HTML en DataFrame
-data = []
-rows = table_7.find_all('tr')
-for row in rows:
-    cols = row.find_all(['th', 'td'])
-    cols = [col.text.strip() for col in cols]  # Nettoyer le texte
-    data.append(cols)
+# # Étape 4 : Convertir la table HTML en DataFrame
+# data = []
+# rows = table_7.find_all('tr')
+# for row in rows:
+#     cols = row.find_all(['th', 'td'])
+#     cols = [col.text.strip() for col in cols]  # Nettoyer le texte
+#     data.append(cols)
 
-# Créer un DataFrame pandas
-df = pd.DataFrame(data)
+# # Créer un DataFrame pandas
+# df = pd.DataFrame(data)
 
-# Étape 5 : Enregistrer en CSV ou manipuler les données
-df.to_csv("table_7.csv", index=False)
-print(df)
+# # Étape 5 : Enregistrer en CSV ou manipuler les données
+# df.to_csv("table_7.csv", index=False)
+# print(df)
 
 # Résolution du problème de l'exctraction du tableau résultat à intégrer à data1920
 # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020"
