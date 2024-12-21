@@ -16,3 +16,15 @@ def nettoyage(presentation, classement, resultats, evolution_classement, forme):
     classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
     
     forme = forme.replace({'V':'G', 'D':'P'})
+
+tab25=data23("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2024-2025")
+pr25=tab25[0]
+cl25=tab25[1]
+re25=tab25[2]
+ev25=tab25[3]
+fo25=tab25[4]
+
+
+#pour vscode sur mac
+import code
+code.interact(local=locals())
