@@ -10,26 +10,30 @@ import subprocess
 # Installer le module lxml
 #subprocess.check_call([sys.executable, "-m", "pip", "install", "lxml"])
 
+#les virgules ne sont pas prises en compte pour les chiffres (expl : 27,3 lu comme 273)
+def clean_table(table_html):
+    table_str = str(table_html) 
+    table_str = table_str.replace(',', '.') 
+    return pd.read_html(StringIO(table_str))[0]
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2024/2025
-def data23(url):
+def data2325(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # il y'a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
+    presentation = presentation.iloc[:, :-1]  #on enlève la coupe d'europe
     classement = pd.read_html(StringIO(str(tables[2])))[0]
     resultats = pd.read_html(StringIO(str(tables[3])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[30])))[0]
     forme = pd.read_html(StringIO(str(tables[31])))[0]
 
     # === ETAPE 2 : SÉLECTION DES DONNEES ===
-    # presentation : j'enleve les notes de la page et je rectifie 1e,2e,.. en 1,2,..
-    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation["Classement précédent"] = presentation["Classement précédent"].apply(lambda x: re.sub(r"[^0-9]", "", x))
+    # presentation : je rectifie les colonnes
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
     # evolution : j'enlève les 3 dernières colonnes non utiles et je donne un nom aux colonnes qui n'en ont pas
     evolution_classement = evolution_classement.iloc[:, :-3]
     evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
@@ -53,14 +57,14 @@ def data23(url):
 # evolution_classement = evolution_classement.iloc[:, :-3] -> evolution_classement = evolution_classement.iloc[:, :-2] ( A partir de cette année et des précédents il manque la colonne barrage)
 
 
-
 def data2223(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # il y a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
+    presentation = presentation.iloc[:, :-1]  #on enlève la coupe d'europe
     classement= pd.read_html(StringIO(str(tables[2])))[0]
     resultats = pd.read_html(StringIO(str(tables[3])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[31])))[0]
@@ -68,13 +72,7 @@ def data2223(url):
 
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
-    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2022-2023']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
-
-    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
 
     # evolution : j'enlève les 3 dernières colonnes non utiles et je donne un nom aux colonnes qui n'en ont pas
     evolution_classement = evolution_classement.iloc[:, :-2]
@@ -96,7 +94,8 @@ def data2122(url):
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # il y a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
+    presentation = presentation.iloc[:, :-1]  #on enlève la coupe d'europe
     classement = pd.read_html(StringIO(str(tables[2])))[0]
     resultats = pd.read_html(StringIO(str(tables[3])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[31])))[0]
@@ -104,13 +103,7 @@ def data2122(url):
 
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
-    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2021-2022']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
-
-    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
+    presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
 
     # evolution : je donne un nom aux colonnes qui n'en ont pas
     evolution_classement = evolution_classement.iloc[:, :-2]
@@ -143,7 +136,7 @@ def data2021(url):
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # il y a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
     classement = pd.read_html(StringIO(str(tables[2])))[0]
     resultats = pd.read_html(StringIO(str(tables[4])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[31])))[0]
@@ -152,12 +145,6 @@ def data2021(url):
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
     presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
-
-    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
     # evolution : je donne un nom aux colonnes qui n'en ont pas
     evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
@@ -187,27 +174,23 @@ def data1920(url):
     tables = soup.find_all("table", {"class": "wikitable"})
 
     # il y a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
     classement = pd.read_html(StringIO(str(tables[1])))[0]
     # resultats20 = pd.read_html(StringIO(str(tables[3])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[28])))[0]
+    evolution_classement = evolution_classement.iloc[:, :18]
     forme = pd.read_html(StringIO(str(tables[29])))[0]
+    forme = forme.iloc[:, :18]
 
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
     presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
-
-    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
     # evolution : je donne un nom aux colonnes qui n'en ont pas
-    evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
+    evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17']
 
     # forme : je donne un nom aux colonnes qui n'en ont pas
-    forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
+    forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17']
 
     soup = BeautifulSoup(response.content, "html.parser")
 
@@ -240,13 +223,13 @@ def data1920(url):
 
 # evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
 # forme = pd.read_html(StringIO(str(tables[30])))[0]
-def data18(url):
+def data1619(url):
     # url = "https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
     # il y a 37 tables mais seulement 5 nous intéressent
-    presentation = pd.read_html(StringIO(str(tables[0])))[0]
+    presentation = clean_table(tables[0])
     classement = pd.read_html(StringIO(str(tables[1])))[0]
     # resultats19 = pd.read_html(StringIO(str(tables[3])))[0]
     evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
@@ -255,12 +238,6 @@ def data18(url):
     # === ETAPE 2 : NETTOYAGE DES DONNEES ===
     # presentation : j'enleve les notes de la page et je rectifie 1e, 2e,.. en 1, 2,..
     presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement précédent', 'Entraîneur en chef', 'Stade', 'Capacité']
-    presentation["Capacité"] = presentation["Capacité"].apply(lambda x: int(x.replace(" ", "").replace("\xa0", "").split("[")[0]))
-    presentation['Classement précédent'] = presentation['Classement précédent'].apply(lambda x: re.sub(r"[^0-9]", "", x))
-
-    # classement : j'enleve champion et promu de l'année précédente pour avoir juste le nom des équipes
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" T") if x.endswith(" T") else x)
-    classement["Club"] = classement["Club"].apply(lambda x: x.rstrip(" P") if x.endswith(" P") else x)
 
     # evolution : je donne un nom aux colonnes qui n'en ont pas
     evolution_classement.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26']
@@ -286,7 +263,7 @@ def data18(url):
     df = pd.DataFrame(data)
 
     # Étape 5 : Enregistrer en CSV ou manipuler les données
-    df.to_csv("table_7.csv", index=False)
+    #df.to_csv("table_7.csv", index=False)
     return presentation, classement, df, evolution_classement, forme
 # data18("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019")
 # data18("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2017-2018")
