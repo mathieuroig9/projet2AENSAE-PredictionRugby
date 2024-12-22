@@ -57,7 +57,7 @@ def club(nom, t2425, t2324, t2223):
     return tab_recap
 
 
-t=club("USA Perpignan", tab2425, tab2324,tab2223)
+t=club("Stade toulousain", tab2425, tab2324,tab2223)
 
 #pour vscode sur mac
 import code
