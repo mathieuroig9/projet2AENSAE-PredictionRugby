@@ -30,28 +30,7 @@ def nettoyage(presentation, classement, resultats, evolution_classement, forme):
     resultats.replace('', '-', inplace=True)
 
     #il y'a des fois des notes après le classement, on garde que le classement
-    evolution_classement.iloc[:, 1:] = evolution_classement.iloc[:, 1:].applymap(lambda x: int(float(re.sub(r"[^\d.]", "", str(x)))) if pd.notna(x) and isinstance(x, (float, int, str)) and re.match(r"^\d+(\.\d+)?$", re.sub(r"[^\d.]", "", str(x))) else x)
-
+    for col in evolution_classement.columns[1:]:
+        evolution_classement[col] = evolution_classement[col].apply(lambda x: int(float(re.sub(r"[^\d.]", "", str(x)))) if pd.notna(x) and isinstance(x, (float, int, str)) and re.match(r"^\d+(\.\d+)?$", re.sub(r"[^\d.]", "", str(x))) else x)
+    
     forme.iloc[:, 1:] = forme.iloc[:, 1:].replace({'G': 'V', 'P': 'D'}, regex=False)
-
-tab=data2325("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2024-2025")
-#tab=data2325("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2023-2024")
-#tab=data2223("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2022-2023")
-#tab=data2122("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2021-2022")
-#tab=data2021("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2020-2021")
-#tab=data1920("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020")
-#tab=data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019")
-#tab=data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2017-2018")
-#tab=data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017")
-
-nettoyage(*tab)
-pr=tab[0]
-cl=tab[1]
-re=tab[2]
-ev=tab[3]
-fo=tab[4]
-
-
-#pour vscode sur mac
-import code
-code.interact(local=locals())
