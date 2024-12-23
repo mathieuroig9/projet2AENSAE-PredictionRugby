@@ -1,6 +1,9 @@
 StringIO
 pandas
 requests
+re
 BeautifulSoup
 sys
+os
 subprocess
+numpy
