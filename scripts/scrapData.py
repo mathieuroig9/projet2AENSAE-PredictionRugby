@@ -17,8 +17,8 @@ def clean_table(table_html):
     return pd.read_html(StringIO(table_str))[0]
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
-# IMPORTATION DE LA PAGE WEB 2024/2025
-def data2325(url):
+# IMPORTATION DE LA PAGE WEB 2024/2025 et 2023/2024 les pages étant similaires la même fonction marche
+def data2325(url): 
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
     tables = soup.find_all("table", {"class": "wikitable"})
@@ -47,7 +47,11 @@ def data2325(url):
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2022/2023
-# 3 modifs :
+
+
+# 3 modifs par rapport aux 2 années précédentes :
+# Le tableau évolution et forme voit leur indice de table décalé de 1 car il y a un tableau "cumul des points" avant ces tableaux qu'il n'y avait pas sur les autres pages
+
 # evolution_classement = pd.read_html(StringIO(str(tables[30])))[0] -> evolution_classement = pd.read_html(StringIO(str(tables[31])))[0]
 
 # forme = pd.read_html(StringIO(str(tables[31])))[0] -> forme = pd.read_html(StringIO(str(tables[32])))[0]
@@ -86,8 +90,11 @@ def data2223(url):
 
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
-# IMPORTATION DE LA PAGE WEB 2021/2022, modification pareil que pour 2022/2023 + il y a eu des journées de rattrapages nommées R1, R2,R3 donc il y a 3 colonnes de plus (a voir plus tard comment intégrer ça au modèle) :
+# IMPORTATION DE LA PAGE WEB 2021/2022, 
+
+# Modifications pareil que pour 2022/2023 + il y a eu des journées de rattrapages nommées R1, R2,R3 donc il y a 3 colonnes de plus (a voir plus tard comment intégrer ça au modèle) :
 # forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18', 'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26'] -> forme.columns = ['Equipes/Journées', 'J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8', 'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'JR1', 'J18', 'J19', 'J20', 'J21','JR2', 'JR3', 'J22', 'J23', 'J24', 'J25', 'J26']
+
 def data2122(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -116,13 +123,16 @@ def data2122(url):
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2020/2021
+
+# Modifiations:
 # tableau résultat plus bas que d'habitude : 
 # resultats = pd.read_html(StringIO(str(tables[3])))[0] -> resultats = pd.read_html(StringIO(str(tables[4])))[0]
 
 
 # Tableau présentation n'a que 7 colonnes, pas de "compétition européenne …"
-# (modulo les années à adapter
+
 # presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2023-2024', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025'] -> presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2023-2024', 'Entraîneur en chef', 'Stade', 'Capacité']
+# (modulo les années à adapter dans le tableau présentation  )
 
 # evolution_classement = pd.read_html(StringIO(str(tables[30])))[0] -> evolution_classement = pd.read_html(StringIO(str(tables[31])))[0]
 
@@ -130,6 +140,7 @@ def data2122(url):
 
 
 # Le tableau évolution du classement ne comporte pas de colonne après le jour 26, donc pas besoin de supprimer les colonnes
+
 def data2021(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -156,18 +167,22 @@ def data2021(url):
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2019/2020
+
+# Modifications :
 # Tableau présentation n'a que 7 colonnes, pas de "compétition européenne …"
-# (modulo les années à adapter
 # presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2023-2024', 'Entraîneur en chef', 'Stade', 'Capacité', 'Compétition européenne 2024-2025'] -> presentation.columns = ['Club', 'Dernière montée', 'Budget en M€', 'Classement 2023-2024', 'Entraîneur en chef', 'Stade', 'Capacité']
+# (modulo les années à adapter dans le tableau présentation  )
+
 # tableau classement, le tableau classemnt est plus tôt dans les tables :
 # classement = pd.read_html(StringIO(str(tables[2])))[0] -> classement = pd.read_html(StringIO(str(tables[1])))[0]
 
-# évolution classement, le tableau d'évolution du classement est plsu tôt dans les tables : evolution_classement = pd.read_html(StringIO(str(tables[30])))[0] -> evolution_classement = pd.read_html(StringIO(str(tables[28])))[0]
+# évolution classement, le tableau d'évolution du classement est plus tôt dans les tables : evolution_classement = pd.read_html(StringIO(str(tables[30])))[0] -> evolution_classement = pd.read_html(StringIO(str(tables[28])))[0]
 
 # de même pour forme :
 # forme = pd.read_html(StringIO(str(tables[31])))[0] -> forme = pd.read_html(StringIO(str(tables[29])))[0]
 
 # Remarque : Pour cette année à cause du covid les journées s'arrêtent à 17
+
 def data1920(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -218,7 +233,9 @@ def data1920(url):
 #data1920("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2019-2020")
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
-# IMPORTATION DE LA PAGE WEB 2018/2019
+# IMPORTATION DES PAGES WEB 2018/2019, 2017/2018 et 2016/2017
+# Ces 3 années ont des pages similaires ont peut donc utiliser la même fonction
+
 # classement = pd.read_html(StringIO(str(tables[2])))[0] -> classement = pd.read_html(StringIO(str(tables[1])))[0]
 
 # evolution_classement = pd.read_html(StringIO(str(tables[29])))[0]
