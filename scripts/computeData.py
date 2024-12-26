@@ -121,4 +121,4 @@ for j in range(1, 10):
 tab_presentaion_global = tableauglobal[0]
 tab_classement_global = tableauglobal[1]
 tab_evolution_classement_global = tableauglobal[3]
-tab_forme_global = tableauglobal[5]
+tab_forme_global = tableauglobal[4]
