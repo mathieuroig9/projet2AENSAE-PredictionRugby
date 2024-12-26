@@ -127,14 +127,5 @@ tab_forme_global = tableauglobal[4]
 tab_presentation_global['Budget en M€'] = pd.to_numeric(tab_presentation_global['Budget en M€'], errors='coerce')
 tab_presentation_global['Classement précédent'] = pd.to_numeric(tab_presentation_global['Classement précédent'], errors='coerce')
 
-# Remplacer 'V' par 1 et 'D' par 0 pour avoir des valeurs numériques
-colVD=['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8',
-       'J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18',
-       'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26', 'JR1', 'JR2',
-       'JR3']
-for col2 in colVD:
-    tab_forme_global[col2] = tab_forme_global[col2].replace({'V': 1,'N':0.5, 'D': 0, 'R': np.nan}) # R veut dire reporté donc le match n'a pas eu lieu on met donc nan
-colVD = ['J1', 'J2', 'J3', 'J4', 'J5', 'J6', 'J7', 'J8','J9', 'J10', 'J11', 'J12', 'J13', 'J14', 'J15', 'J16', 'J17', 'J18',
-         'J19', 'J20', 'J21', 'J22', 'J23', 'J24', 'J25', 'J26', 'JR1', 'JR2',
-         'JR3']
+
 
