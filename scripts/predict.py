@@ -1,13 +1,15 @@
 
 import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.model_selection import train_test_split
-import numpy as np
-import pandas as pd
-import pandas as pd
 from computeData import tab_presentation_global, tab_classement_global, tab_evolution_classement_global, tab_forme_global 
-import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
 
 # Charger vos données
 presentation = tab_presentation_global
@@ -15,23 +17,13 @@ classement = tab_classement_global
 evolution = tab_evolution_classement_global
 forme = tab_forme_global
 
-# **Fusion des données**
+# Fusion des différentes données en un seul data frame
 data = pd.merge(presentation, classement, on=['Club', 'année'], how='inner')
 evolution.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
 data = pd.merge(data, evolution, on=['Club', 'année'], how='inner')
 forme.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
 data = pd.merge(data, forme, on=['Club', 'année'], how='inner')
 
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
 
 # Préparation des données
 X = data.drop(columns=['Rang'])  # On retire la varibale à prédire
