@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 import sys
 import subprocess
 
-# Installer le module lxml
-#subprocess.check_call([sys.executable, "-m", "pip", "install", "lxml"])
+#Installer le module lxml
+subprocess.check_call([sys.executable, "-m", "pip", "install", "lxml"])
 
 #les virgules ne sont pas prises en compte pour les chiffres (expl : 27,3 lu comme 273)
 def clean_table(table_html):
@@ -42,8 +42,8 @@ def data2325(url):
 
     return presentation, classement, resultats, evolution_classement, forme
 
-#data23("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2024-2025")
-#data23("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2023-2024")
+#data2325("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2024-2025")
+#data2325("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2023-2024")
 
 # === ETAPE 1 : IMPORTATION DONNEES ===
 # IMPORTATION DE LA PAGE WEB 2022/2023
@@ -282,9 +282,9 @@ def data1619(url):
     # Étape 5 : Enregistrer en CSV ou manipuler les données
     #df.to_csv("table_7.csv", index=False)
     return presentation, classement, df, evolution_classement, forme
-# data18("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019")
-# data18("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2017-2018")
-# data18("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017")
+# data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2018-2019")
+# data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2017-2018")
+# data1619("https://fr.wikipedia.org/wiki/Championnat_de_France_de_rugby_%C3%A0_XV_2016-2017")
 
 
 
