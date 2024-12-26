@@ -118,7 +118,7 @@ for j in range(1, 10):
         else:
          tableauglobal[i] = pd.concat([tableauglobal[i], ajout_an(eval(f"tab{j}")[i], j - 1)], ignore_index=True)
 
-tab_presentaion_global = tableauglobal[0]
+tab_presentation_global = tableauglobal[0]
 tab_classement_global = tableauglobal[1]
 tab_evolution_classement_global = tableauglobal[3]
 tab_forme_global = tableauglobal[4]
