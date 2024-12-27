@@ -111,3 +111,6 @@ a = np.array(a)
 a = a.flatten()
 print("Mean Absolute Error:", mean_absolute_error(y_test, a))
 print("Root Mean Squared Error:", np.sqrt(mean_squared_error(y_test, a)))
+
+#import code
+#code.interact(local=locals())
