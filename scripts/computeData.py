@@ -111,12 +111,12 @@ def ajout_an(df,i):
 
 # On va faire maintenant une boucle pour concaténer les tableaux entre eux :
 tableauglobal = [pd.DataFrame() for _ in range(5)]
-# On remarquera que l'on ne prend pas le tableau résusltat global car les équipes du cahmpionnat change chaque année donc ce n'est pas possible de le concaténer
+# On remarquera que l'on ne prend pas le tableau résusltat global car les équipes du championnat changent chaque année donc ce n'est pas possible de le concaténer
 
 for j in range(1, 10):
     for i in range(5):
         if i == 2:
-            pass  # on ne récupère pas résultat
+            pass  # on ne récupère pas le tableau résultat
         else:
          tableauglobal[i] = pd.concat([tableauglobal[i], ajout_an(eval(f"tab{j}")[i], j - 1)], ignore_index=True)
 

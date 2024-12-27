@@ -38,10 +38,11 @@ forme.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
 # diff_classement = keys_classement - keys_presentation
 #  print("Lignes dans classement mais pas dans presentation :", diff_classement)
 # Le premier tableau utilise la dénomination 'Stade français' tandis que le second 'Stade français Paris'
-# On procède de même avec les différents tableaux pour observer toutes les appelations différentes 
+# On procède de même avec les différents tableaux pour observer toutes les appelations différentes (on le fait par rapport à classement)
 # On répertorie alors ces appelations différentes pour pouvoir par la suite uniformiser tout les noms : 
 
 mapping = {
+    'Paris' : 'Stade français Paris',
     'Stade français': 'Stade français Paris',
     'Clermont': 'ASM Clermont',
     'La Rochelle': 'Stade rochelais',
@@ -56,7 +57,9 @@ mapping = {
     'Grenoble': 'FC Grenoble',
     'Oyonnax': 'US Oyonnax',
     'Perpignan': 'USA Perpignan',
-    'Bordeaux-Bègles': 'Union Bordeaux Bègles'
+    'Bordeaux-Bègles': 'Union Bordeaux Bègles',
+    'Bordeaux Bègles' : 'Union Bordeaux Bègles',
+    'Lyon' : 'Lyon OU'
 }
 # On a plus qu'à uniformiser les noms dans tout les tableaux
 presentation['Club'] = presentation['Club'].replace(mapping)
@@ -70,7 +73,7 @@ data = pd.merge(data, forme, on=['Club', 'année'], how='inner')
 
 
 # Préparation des données
-X = data.drop(columns=['Rang'])  # On retire la varibale à prédire
+X = data.drop(columns=['Rang','J26_x'])  # On retire la varibale à prédire, J26_x est le classement le jour 26 qui est le même que le classement final
 y = data['Rang']  # Classement final On prend la variable que l'on souhaite prédire
 
 # On prend un jeu d'entraînement et de test (pour l'année 2023/2024, on s'entraîne sur le passé)
@@ -91,7 +94,7 @@ var_num_ajustées = Pipeline(steps=[
 ])
 
 # Pour les variables catégorielles
-var_num_ajustées = Pipeline(steps=[
+var_cat_ajustées = Pipeline(steps=[
     ('valeur_manquantes', SimpleImputer(strategy='most_frequent')),  # Lorsqu'il manque des données on les remplace par la catégorie la plus fréquente
     ('transfomration_binaire', OneHotEncoder(handle_unknown='ignore'))  # Transformation en variables binaires
 ])
@@ -101,7 +104,7 @@ var_num_ajustées = Pipeline(steps=[
 var_combinée = ColumnTransformer(
     transformers=[
         ('num', var_num_ajustées, variables_numériques),
-        ('cat', var_num_ajustées, variables_catégorielles)
+        ('cat', var_cat_ajustées, variables_catégorielles)
     ])
 
 # Modélisation avec RandomForestRegressor
@@ -136,26 +139,26 @@ print("Root Mean Squared Error:", np.sqrt(mean_squared_error(y_test, y_pred)))
 # On fait de même pour les deux autres années : 
 
 future_data23 = X[X['année'] == 2023].reset_index(drop=True) 
-predictions23 = pd.Series(modele.predict(future_data23), name='Rang')
+predictions23 = pd.Series(modele.predict(future_data23), name='Rang_prédit')
 pred23 = pd.concat([future_data23['Club'], predictions23], axis=1)
-pred23['Rang_comparatif'] = pred23['Rang'].rank(method='min')
+pred23['Rang_prédit_ajusté'] = pred23['Rang_prédit'].rank(method='min')
 print("Predictions pour 2023/2024:", pred23)
 
 
 future_data24 = X[X['année'] == 2024].reset_index(drop=True) 
-predictions24 = pd.Series(modele.predict(future_data24), name='Rang')
+predictions24 = pd.Series(modele.predict(future_data24), name='Rang_prédit')
 pred24 = pd.concat([future_data24['Club'], predictions24], axis=1)
-pred24['Rang_comparatif'] = pred24['Rang'].rank(method='min')
+pred24['Rang_prédit_ajusté'] = pred24['Rang_prédit'].rank(method='min')
 print("Predictions pour 2024/2025:", pred24)
 
 
 # Comparons avec une prédiction ajustée en fonction du rang des autres
-a=[pred23['Rang_comparatif'], pred24['Rang_comparatif']]
+a=[pred23['Rang_prédit_ajusté'], pred24['Rang_prédit_ajusté']]
 a = np.array(a)
 a = a.flatten()
 print("Mean Absolute Error:", mean_absolute_error(y_test, a))
 print("Root Mean Squared Error:", np.sqrt(mean_squared_error(y_test, a)))
-
+# Avec le rang ajusté les prédictions sont encore meilleures les 2 ont diminuées
 
 # On veut maintenant voir comment évolue la prédiction lorsque l'on retire les jours au fur et à mesure :
 # Pour ce faire on va stocker les valeurs prédites et les erreurs dans 3 tableaux :
@@ -167,12 +170,24 @@ PREDICT.append( y_pred)
 MAE.append(mean_absolute_error(y_test, y_pred))
 RMSE.append(np.sqrt(mean_squared_error(y_test, y_pred)))
 
-# On crée une copie de nos jeux d'entrainement et de test pour les garder intact
+# On crée une copie de notre jeu de test pour le garder intact
 
-X_train_bis = X_train
 X_test_bis = X_test
 
-# Le tableau possède 75 colonnes
-# On commence d'abord par retirer les journées de rattrappages qu'il n'y a eu qu'en 2021/2022
-# On s'attend donc à ce que le modèle ne change pas beaucoup car cela n'aura pas d'impact sur toutes les autres années
+# On va faire comme ci on avait pas accès aux journée en enlevant une par une les données du jour 26 jusqu'au jour 2 de l'année que l'on veut prédire(on le fait en même temps pour les deux années)
+# Pas besoinde de supprimer JR1 à JR3 car 2023 et 2024 ne sont pas concernées (pas de valeur)
 
+# Suppression des colonnes J25_x, J25_y, ..., J2_x, J2_y
+for i in range(25, 1, -1):  # Commence à 25 et descend jusqu'à 2
+    X_test_bis[f'J{i}_x'] = np.nan
+    X_test_bis[f'J{i}_y'] = np.nan
+    # X_test_bis.drop(columns=[f'J{i}_x', f'J{i}_y'], inplace=True)
+    y_pred = modele.predict(X_test_bis)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    PREDICT.append(y_pred)
+    MAE.append(mae)
+    RMSE.append(rmse)
+# La précision du modèle est de moins en moins bonne mais au final cela reste quand même bon
+# Cela s'exlique peut-être par le fait que le nom du club joue est ce qui importe le plus 
+# Et qu'au final les données obtenues sur les différents jours sont très corrélées au nom du club
