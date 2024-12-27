@@ -18,7 +18,7 @@ evolution = tab_evolution_classement_global
 forme = tab_forme_global
 
 # Fusion des différentes données en un seul data frame
-# On va fuisonner les tableaux en se servant du club et de l'année comme clef
+# On va fusionner les tableaux en se servant du club et de l'année comme clef
 # On commence déjà par uniformiser le nom de la colonne 'Club':
 evolution.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
 forme.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
