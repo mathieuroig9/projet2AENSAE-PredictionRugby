@@ -257,3 +257,26 @@ plt.show()
 # On peut donc se dire que les données obtenues sur les jours ne changent pas beaucoupe en moyenne l'erreur moyenne par rapport au classement ajusté
 # Peut-être que cela ne change pas vraiment le classement ajusté (ne change pas la position relative par rapport aux autres équipes)
 # En revanche pour la prédiction non ajusté plus on a de jours plus on est précis en moyenne dans nos prédicitions
+
+
+# On va maintenant créer une fonction qui permet de tracer l'évolution du classement prédit d'une équipe en fonction du nombre de jours disponibles :
+import pandas as pd
+
+def evol_classement_prédit(Nom_de_léquipe,tab): # On choisit l'équipe que l'on veut et le tableau contenant les prédictions : PREDICT 23 pour l'année 2023 et PREDICT 24 pour l'année 2024
+    val_pred = []
+    for i in range(25):
+        df = tab[i] # i représente le nombre de jours que l'on a pas pour faire la prédiction
+        # On filtre pour obtenir le classement prédit de l'équipe que l'on souhaite
+        rang_pred_adjusté = df.loc[df['Club'] == Nom_de_léquipe, 'Rang_prédit_ajusté'].values[0]
+        val_pred.append(rang_pred_adjusté )
+    # On crée une variable qui représentera la nombre de jour utilisé pour prédire le classement
+    y = np.linspace(25, 1, num=25)   
+    plt.figure(figsize=(10, 5))
+    plt.plot(y, val_pred, label=f'Rang prédit pour {Nom_de_léquipe}', marker='o', linestyle='-', color='green')
+    plt.xlabel('Nombre de jours disponibles')
+    plt.ylabel('Rang prédit')
+    plt.title(f'Évolution du rang prédit ajusté pour {Nom_de_léquipe} en fonction du nombres de jours disponibles')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+evol_classement_prédit('Stade rochelais', PREDICT23) 
