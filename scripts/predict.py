@@ -263,19 +263,23 @@ plt.show()
 import pandas as pd
 def evol_classement_prédit(Nom_de_léquipe,année): # On choisit l'équipe que l'on veut et l'année pour qu'on puisse choisir les bon tableaux contenant les prédictions : PREDICT23 pour l'année 2023 et PREDICT24 pour l'année 2024
     val_pred = []
+
     for i in range(25):
         tab = eval(f"PREDICT{année % 2000}")
         df = tab[i] # i représente le nombre de jours que l'on a pas pour faire la prédiction
         # On filtre pour obtenir le classement prédit de l'équipe que l'on souhaite
         rang_pred_adjusté = df.loc[df['Club'] == Nom_de_léquipe, 'Rang_prédit_ajusté'].values[0]
         val_pred.append(rang_pred_adjusté )
+        if i == 0 : # la prédiction pour le jour 26 et le jour 25 est la même donc on la rajoute 2 fois (on ne prend pas en compte la journée 26 car elle indique déjà le rang final)
+            val_pred.append(rang_pred_adjusté )
+
     # On crée une variable qui représentera la nombre de jour utilisé pour prédire le classement
-    y = np.linspace(25, 1, num=25)  
+    y = np.linspace(26, 1, num=26)  
      # On veut aussi comparer le classement prédit avec les k premiers jours avec le classement du k_ème jour :
     val_réel = []
     tab2 = X[(X['année'] == année) & (X['Club'] == Nom_de_léquipe) ].reset_index(drop=True) 
-    for i in range(25,0,-1):
-        val_réel.append(tab2[f'J{i}_x'])
+    for i in range(26,0,-1):
+        val_réel.append(tab2[f'J{25}_x'])
 
          
     plt.figure(figsize=(10, 5))
