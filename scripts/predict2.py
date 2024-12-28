@@ -85,27 +85,19 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 
 
-def complete_t9_resultats(t7, t8, t9, c9):
+def complete_t9_resultats(t5,t6,t7,t8,t9):
     """
-    Complète les cases JX de t9 avec des scores prédits basés sur les tableaux historiques t7 et t8,
-    et met à jour les statistiques du tableau c9 en fonction des résultats calculés.
+    Complète les cases JX de t9 avec des scores prédits basés sur les tableaux historiques t1 à t8.
 
     Arguments :
-    - t7, t8 : DataFrames contenant les données historiques des scores.
+    - t1, ..., t8 : DataFrames contenant les données historiques des scores.
     - t9 : DataFrame représentant le tableau à compléter.
-    - c9 : DataFrame représentant le tableau des statistiques à mettre à jour.
 
     Retourne :
     - t9 complété avec les scores sous la forme "XX-YY".
-    - c9 mis à jour avec les nouvelles statistiques.
     """
-    import pandas as pd
-    import numpy as np
-    from sklearn.ensemble import RandomForestRegressor
-    from sklearn.model_selection import train_test_split
-
     # Fusionner les tableaux historiques pour créer une base de données unique
-    historical_tables = [t7, t8]
+    historical_tables = [t5,t6,t7,t8]
     historical_data = []
 
     for table in historical_tables:
@@ -127,7 +119,7 @@ def complete_t9_resultats(t7, t8, t9, c9):
         """Calcule les caractéristiques pour une paire d'équipes."""
         history_a = historical_df[historical_df['team_a'] == team_a]
         history_b = historical_df[historical_df['team_b'] == team_b]
-
+        
         features = {
             'mean_score_a': history_a['score_a'].mean() if not history_a.empty else 0,
             'mean_score_b': history_b['score_b'].mean() if not history_b.empty else 0,
@@ -161,54 +153,82 @@ def complete_t9_resultats(t7, t8, t9, c9):
     model_a.fit(X_train, y_train_a)
     model_b.fit(X_train, y_train_b)
 
-    # Supprimer les colonnes inutiles de c9
-    c9 = c9.drop(columns=['Em', 'Ee', 'Bo', 'Bd'])
-
-    # Compléter t9 et mettre à jour c9
     for i, row in t9.iterrows():
         for j, value in enumerate(row):
             if isinstance(value, str) and value.startswith('J'):
                 team_a = t9.iloc[i, 0]
                 team_b = t9.columns[j]
 
-                # Utiliser les données historiques pour prédire le score
-                input_features = calculate_features(team_a, team_b, historical_df)
-                score_a = int(model_a.predict([input_features])[0])
-                score_b = int(model_b.predict([input_features])[0])
-                t9.iloc[i, j] = f"{score_a}-{score_b}"
+                # Vérifier si l'équipe est absente des données historiques
+                is_team_a_missing = not (np.isin(team_a, historical_df['team_a'].values) | np.isin(team_a, historical_df['team_b'].values)).any()
+                is_team_b_missing = not (np.isin(team_b, historical_df['team_a'].values) | np.isin(team_b, historical_df['team_b'].values)).any()
 
-                # Mettre à jour les statistiques dans c9
-                idx_a = c9[c9['Club'] == team_a].index[0]
-                idx_b = c9[c9['Club'] == team_b].index[0]
-
-                c9.loc[idx_a, 'J'] += 1
-                c9.loc[idx_b, 'J'] += 1
-
-                c9.loc[idx_a, 'Pm'] += score_a
-                c9.loc[idx_a, 'Pe'] += score_b
-                c9.loc[idx_b, 'Pm'] += score_b
-                c9.loc[idx_b, 'Pe'] += score_a
-
-                c9.loc[idx_a, 'Diff'] += score_a - score_b
-                c9.loc[idx_b, 'Diff'] += score_b - score_a
-
-                if score_a > score_b:
-                    c9.loc[idx_a, 'V'] += 1
-                    c9.loc[idx_b, 'D'] += 1
-                    c9.loc[idx_a, 'Pts'] += 4
-                elif score_a < score_b:
-                    c9.loc[idx_b, 'V'] += 1
-                    c9.loc[idx_a, 'D'] += 1
-                    c9.loc[idx_b, 'Pts'] += 4
+                if is_team_a_missing:
+                    # Calculer les scores pour team_a à partir des données déjà dans t9
+                    existing_scores = [
+                        list(map(int, val.split('-'))) for val in t9.iloc[i, 1:] if isinstance(val, str) and '-' in val
+                    ]
+                    if existing_scores:
+                        avg_score_a = int(np.mean([score[0] for score in existing_scores]))
+                        avg_score_b = int(np.mean([score[1] for score in existing_scores]))
+                        t9.iloc[i, j] = f"{avg_score_a}-{avg_score_b}"
+                elif is_team_b_missing:
+                    # Calculer les scores pour team_b à partir des données déjà dans t9
+                    existing_scores = [
+                        list(map(int, val.split('-'))) for val in t9.iloc[:, j] if isinstance(val, str) and '-' in val
+                    ]
+                    if existing_scores:
+                        avg_score_a = int(np.mean([score[0] for score in existing_scores]))
+                        avg_score_b = int(np.mean([score[1] for score in existing_scores]))
+                        t9.iloc[i, j] = f"{avg_score_a}-{avg_score_b}"
                 else:
-                    c9.loc[idx_a, 'N'] += 1
-                    c9.loc[idx_b, 'N'] += 1
-                    c9.loc[idx_a, 'Pts'] += 2
-                    c9.loc[idx_b, 'Pts'] += 2
+                    # Utiliser les données historiques si les deux équipes y sont présentes
+                    input_features = calculate_features(team_a, team_b, historical_df)
+                    score_a = int(model_a.predict([input_features])[0])
+                    score_b = int(model_b.predict([input_features])[0])
+                    t9.iloc[i, j] = f"{score_a}-{score_b}"
 
-    return t9, c9
+    #pour plus de lisibilité du tableau, enlever les #
+    #column_names = list(tab9[2].iloc[0, 1:-1])
+    #t9.iloc[0, 1:] = column_names
 
-t9,c9=complete_t9_resultats(t7,t8,t9, tab9[1])
+    return t9
+
+import pandas as pd
+
+def resultat_equipe(club, t):
+    """
+    Met à jour le tableau t en conservant uniquement les résultats pour la ligne et la colonne
+    correspondant au club donné. Toutes les autres cases sont remplacées par '-'.
+
+    :param club: Nom du club (chaîne de caractères) à analyser
+    :param t: Tableau sous forme de DataFrame Pandas
+    :return: DataFrame Pandas modifié
+    """
+    # Trouver les indices de la ligne et de la colonne correspondant au club
+    try:
+        ligne_idx = t[t[0] == club].index[0]  # Ligne où le club est trouvé dans la première colonne
+        colonne_idx = t.iloc[0, :].tolist().index(club)  # Colonne où le club est trouvé dans la première ligne
+    except IndexError:
+        raise ValueError(f"Le club '{club}' n'existe pas dans le tableau.")
+    
+    # Créer une copie du tableau pour la mise à jour
+    t_resultat = t.copy()
+    
+    # Parcourir tout le tableau et appliquer la règle
+    for i in range(1, t.shape[0]):
+        for j in range(1, t.shape[1]):
+            if i != ligne_idx and j != colonne_idx:  # Ni la ligne ni la colonne du club
+                t_resultat.iloc[i, j] = '-'
+    
+    column_names = list(tab9[2].iloc[0, 1:-1])
+    t_resultat.iloc[0, 1:] = column_names
+    
+    return t_resultat
+
+t9=complete_t9_resultats(t5,t6,t7,t8,t9)
+
+r=resultat_equipe("Stade toulousain",t9)
 
 import code
 code.interact(local=locals())
