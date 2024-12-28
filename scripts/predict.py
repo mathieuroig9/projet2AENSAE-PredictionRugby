@@ -111,7 +111,7 @@ var_combinée = ColumnTransformer(
 # Pipeline complet avec préprocesseur et modèle Random Forest
 modele = Pipeline(steps=[
     ('données_utilisées', var_combinée),
-    ('forêt_aléatoire', RandomForestRegressor(n_estimators=100, random_state=2024))  # On fixe la seed à 2024
+    ('forêt_aléatoire', RandomForestRegressor(n_estimators=100, random_state=2024))  # On fixe la seed à 2024 pour retrouver nos résultats
 ])
 
 # Entraîner le modèle
@@ -162,13 +162,20 @@ print("Root Mean Squared Error:", np.sqrt(mean_squared_error(y_test, a)))
 
 # On veut maintenant voir comment évolue la prédiction lorsque l'on retire les jours au fur et à mesure :
 # Pour ce faire on va stocker les valeurs prédites et les erreurs dans 3 tableaux :
-PREDICT=[]
-MAE=[]
-RMSE= []
+PREDICT23 = []
+PREDICT24 = []
+MAE = []
+RMSE = []
+MAE_ajuste = []
+RMSE_ajuste = []
 
-PREDICT.append( y_pred)
+
+PREDICT23.append(pred23)
+PREDICT24.append(pred24)
 MAE.append(mean_absolute_error(y_test, y_pred))
 RMSE.append(np.sqrt(mean_squared_error(y_test, y_pred)))
+MAE_ajuste.append(mean_absolute_error(y_test, a))
+RMSE_ajuste.append(np.sqrt(mean_squared_error(y_test, a)))
 
 # On crée une copie de notre jeu de test pour le garder intact
 
@@ -182,12 +189,33 @@ for i in range(25, 1, -1):  # Commence à 25 et descend jusqu'à 2
     X_test_bis[f'J{i}_x'] = np.nan
     X_test_bis[f'J{i}_y'] = np.nan
     # X_test_bis.drop(columns=[f'J{i}_x', f'J{i}_y'], inplace=True)
-    y_pred = modele.predict(X_test_bis)
+    future_data23 = X_test_bis[X_test_bis['année'] == 2023].reset_index(drop=True) 
+    predictions23 = pd.Series(modele.predict(future_data23), name='Rang_prédit')
+    pred23 = pd.concat([future_data23['Club'], predictions23], axis=1)
+    pred23['Rang_prédit_ajusté'] = pred23['Rang_prédit'].rank(method='min')
+
+    future_data24 = X_test_bis[X_test_bis['année'] == 2024].reset_index(drop=True) 
+    predictions24 = pd.Series(modele.predict(future_data24), name='Rang_prédit')
+    pred24 = pd.concat([future_data24['Club'], predictions24], axis=1)
+    pred24['Rang_prédit_ajusté'] = pred24['Rang_prédit'].rank(method='min')
+    
+    y_pred = modele.predict(X_test_bis) # On veut calculer les erreurs sur les 2 année à la fois
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-    PREDICT.append(y_pred)
+    PREDICT23.append(pred23)
+    PREDICT24.append(pred24)
     MAE.append(mae)
     RMSE.append(rmse)
+
+    # On fait pareil, mais cette fois-ci avec le rang ajusté
+    a=[pred23['Rang_prédit_ajusté'], pred24['Rang_prédit_ajusté']]
+    a = np.array(a)
+    a = a.flatten()
+    MAE_ajuste.append(mean_absolute_error(y_test, a))
+    RMSE_ajuste.append(np.sqrt(mean_squared_error(y_test, a)))
+
 # La précision du modèle est de moins en moins bonne mais au final cela reste quand même bon
 # Cela s'exlique peut-être par le fait que le nom du club joue est ce qui importe le plus 
 # Et qu'au final les données obtenues sur les différents jours sont très corrélées au nom du club
+
+# Comparons les erreurs si à la place on avait recalculé un modèle pour le nombre exact de variables que l'on possède(plutôt que de mettre NAN lorsque l'on a pas de données dessus)
