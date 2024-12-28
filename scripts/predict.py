@@ -161,12 +161,13 @@ print("Root Mean Squared Error:", np.sqrt(mean_squared_error(y_test, a)))
 # Avec le rang ajusté les prédictions sont encore meilleures les 2 ont diminuées
 
 # On veut maintenant voir comment évolue la prédiction lorsque l'on retire les jours au fur et à mesure :
-# Pour ce faire on va stocker les valeurs prédites et les erreurs dans 3 tableaux :
-PREDICT23 = []
-PREDICT24 = []
-MAE = []
-RMSE = []
-MAE_ajuste = []
+# Pour ce faire on va stocker les valeurs prédites et les erreurs dans 6 tableaux :
+
+PREDICT23 = [] # Contiendra toutes les prédictions pour l'année 2023
+PREDICT24 = [] # Contiendra toutes les prédictions pour l'année 2024
+MAE = [] # Contiendra les différentes valeurs de léerreur moyenne en valeur absolue au fur et à mesure que l'on retire les variables
+RMSE = [] # Pareil que le précédent mais pour la racine carré de l'eereur quadratique
+MAE_ajuste = [] # Ces 2 tableaux porteront sur les erreurs liés au classement réajusté par rapport aux autres (on passe de continu à discret)
 RMSE_ajuste = []
 
 
@@ -218,4 +219,41 @@ for i in range(25, 1, -1):  # Commence à 25 et descend jusqu'à 2
 # Cela s'exlique peut-être par le fait que le nom du club joue est ce qui importe le plus 
 # Et qu'au final les données obtenues sur les différents jours sont très corrélées au nom du club
 
-# Comparons les erreurs si à la place on avait recalculé un modèle pour le nombre exact de variables que l'on possède(plutôt que de mettre NAN lorsque l'on a pas de données dessus)
+
+
+# On va maintenant tracé les différentes erreurs pour comparer le comportement des erreurs pour les valeurs prédites et les valeurs prédites ajustées
+import matplotlib.pyplot as plt
+
+# On créer une variable qui représentera la nombre de jour utilisé pour prédire le classement
+y = np.linspace(25, 1, num=25)  
+
+# On trace un premier graphe contenant l'erreur e valeur absolue  (MAE et MAE ajusté)
+plt.figure(figsize=(10, 5))
+plt.plot(y, MAE, label='MAE', marker='o', linestyle='-', color='blue')
+plt.plot(y, MAE_ajuste, label='MAE Ajusté', marker='s', linestyle='--', color='orange')
+plt.xlabel('Nombre de jours disponibles')
+plt.ylabel('Erreur absolue')
+plt.title('MAE et MAE Ajusté en fonction du nombre de jours')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# On trace un deuxième graphe pour la racine carré de l'erreur quadratique (RMSE et RMSE ajusté)
+plt.figure(figsize=(10, 5))
+plt.plot(y, RMSE, label='RMSE', marker='o', linestyle='-', color='green')
+plt.plot(y, RMSE_ajuste, label='RMSE Ajusté', marker='s', linestyle='--', color='red')
+plt.xlabel('Nombre de jours disponibles')
+plt.ylabel('Racine carré de l erreur quadratique')
+plt.title('RMSE et RMSE Ajusté en fonction du nombre de jours')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# On observe alors deux choses :
+# Les valeurs prédites ajustées sont en moyennes plus précises que les valeurs prédites
+# Plus on a de jours plus l'erreur portant sur les valeurs prédites est réduite, les 2 types d'erreurs sont décroissantes avec le nombres de jours disponibles
+# En revanche pour les valeurs prédites ajustées ce n'est pas aussi simple elle peuvent augmenter ou diminuer si l'on rajoute des jours en plus
+# Mais globalement les erreurs changent moins que pour les valeurs prédites non ajustées
+# On peut donc se dire que les données obtenues sur les jours ne changent pas beaucoupe en moyenne l'erreur moyenne par rapport au classement ajusté
+# Peut-être que cela ne change pas vraiment le classement ajusté (ne change pas la position relative par rapport aux autres équipes)
+# En revanche pour la prédiction non ajusté plus on a de jours plus on est précis en moyenne dans nos prédicitions
