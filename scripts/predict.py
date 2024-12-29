@@ -10,7 +10,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-
 # Charger vos données
 presentation = tab_presentation_global
 classement = tab_classement_global
@@ -40,7 +39,6 @@ forme.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
 # Le premier tableau utilise la dénomination 'Stade français' tandis que le second 'Stade français Paris'
 # On procède de même avec les différents tableaux pour observer toutes les appelations différentes (on le fait par rapport à classement)
 # On répertorie alors ces appelations différentes pour pouvoir par la suite uniformiser tout les noms : 
-
 mapping = {
     'Paris' : 'Stade français Paris',
     'Stade français': 'Stade français Paris',
@@ -61,16 +59,6 @@ mapping = {
     'Bordeaux Bègles' : 'Union Bordeaux Bègles',
     'Lyon' : 'Lyon OU'
 }
-# On a plus qu'à uniformiser les noms dans tout les tableaux
-presentation['Club'] = presentation['Club'].replace(mapping)
-classement['Club'] = classement['Club'].replace(mapping)
-forme['Club'] = forme['Club'].replace(mapping)
-evolution['Club'] = evolution['Club'].replace(mapping)
-
-data = pd.merge(presentation, classement, on=['Club', 'année'], how='inner')
-data = pd.merge(data, evolution, on=['Club', 'année'], how='inner')
-data = pd.merge(data, forme, on=['Club', 'année'], how='inner')
-
 
 # Préparation des données
 X = data.drop(columns=['Rang','J26_x'])  # On retire la varibale à prédire, J26_x est le classement le jour 26 qui est le même que le classement final
@@ -241,22 +229,9 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-# On observe alors trois choses :
-
-# Les valeurs prédites ajustées sont en moyennes plus précises que les valeurs prédites
-
-# Plus on a de jours plus l'erreur portant sur les valeurs prédites est réduite, les 2 types d'erreurs sont décroissantes avec le nombres de jours disponibles
-
-# En revanche pour les valeurs prédites ajustées ce n'est pas aussi simple elle peuvent augmenter ou diminuer si l'on rajoute des jours en plus
-# Mais globalement les erreurs changent moins que pour les valeurs prédites non ajustées
-
-# On peut donc se dire que les données obtenues sur les jours ne changent pas beaucoup en moyenne l'erreur moyenne obtenue entre rang et rang_ajusté
-# Peut-être que cela ne change pas vraiment le classement ajusté car les données sur les jours ne changent pas la position relative par rapport aux autres équipes, ou pas significativement
-# En revanche pour la prédiction non ajusté plus on a de jours plus on est précis en moyenne dans nos prédicitions, ce qui est attendu
-
-
 # On va maintenant créer une fonction qui permet de tracer l'évolution du classement prédit d'une équipe en fonction du nombre de jours disponibles :
 import pandas as pd
+
 def evol_classement_prédit(Nom_de_léquipe,année): # On choisit l'équipe que l'on veut et l'année pour qu'on puisse choisir les bon tableaux contenant les prédictions : PREDICT23 pour l'année 2023 et PREDICT24 pour l'année 2024
     val_pred = []
 
