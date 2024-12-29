@@ -7,9 +7,9 @@
 
 + Nos Objectifs
 
-mentionner les sites:
+accessibilité et reproductibilité, présentation des données, sans passer par des sites comme:
 [Opta Analyst](https://theanalyst.com/2024/01/club-rugby-stats-hub) et [TOP14](https://top14.lnr.fr/calendrier-et-resultats)
-
+et prédiction
 
 + Sources des Données
 
