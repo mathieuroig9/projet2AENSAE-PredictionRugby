@@ -60,6 +60,17 @@ mapping = {
     'Lyon' : 'Lyon OU'
 }
 
+# On a plus qu'à uniformiser les noms dans tout les tableaux
+presentation['Club'] = presentation['Club'].replace(mapping)
+classement['Club'] = classement['Club'].replace(mapping)
+forme['Club'] = forme['Club'].replace(mapping)
+evolution['Club'] = evolution['Club'].replace(mapping)
+
+data = pd.merge(presentation, classement, on=['Club', 'année'], how='inner')
+data = pd.merge(data, evolution, on=['Club', 'année'], how='inner')
+data = pd.merge(data, forme, on=['Club', 'année'], how='inner')
+
+
 # Préparation des données
 X = data.drop(columns=['Rang','J26_x'])  # On retire la varibale à prédire, J26_x est le classement le jour 26 qui est le même que le classement final
 y = data['Rang']  # Classement final On prend la variable que l'on souhaite prédire
