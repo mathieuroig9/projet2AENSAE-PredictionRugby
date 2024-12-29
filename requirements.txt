@@ -7,3 +7,5 @@ sys
 os
 subprocess
 numpy
+matplotlib
+seaborn
