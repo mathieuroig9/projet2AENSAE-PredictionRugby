@@ -229,6 +229,3 @@ def resultat_equipe(club, t):
 t9=complete_t9_resultats(t5,t6,t7,t8,t9)
 
 r=resultat_equipe("Stade toulousain",t9)
-
-import code
-code.interact(local=locals())

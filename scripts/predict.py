@@ -278,5 +278,3 @@ def evol_classement_prédit(Nom_de_léquipe,année): # On choisit l'équipe que 
     plt.grid(True)
     plt.show()
 evol_classement_prédit('Stade rochelais', 2023) 
-
-
