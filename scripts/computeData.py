@@ -199,6 +199,10 @@ def plot_club_evolution(nom, tab_classement, tab_resultats):
     plt.xticks(journees, rotation=45)  # Affiche les journées sur l'axe des abscisses avec une rotation de 45° si nécessaire
     plt.show()
 
+# On change le nom de la variable Equipe/Journées en Club pour que ce soit bien adapté à la fonction plot_club_evolution et qu'il n'y aie pas d'erreurs
+tab_evolution_classement_global.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
+tab_forme_global.rename(columns={'Equipes/Journées': 'Club'}, inplace=True)
+
 #plot_club_evolution("Stade toulousain", tab_evolution_classement_global, tab_forme_global)
 #plot_club_evolution("USA Perpignan", tab_evolution_classement_global, tab_forme_global)
 
