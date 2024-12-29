@@ -5,11 +5,10 @@
 + Pourquoi le Rugby ?
 
 
+
 + Nos Objectifs
 
-accessibilité et reproductibilité, présentation des données, sans passer par des sites comme:
-[Opta Analyst](https://theanalyst.com/2024/01/club-rugby-stats-hub) et [TOP14](https://top14.lnr.fr/calendrier-et-resultats)
-et prédiction
+Plusieurs sites comme [Opta Analyst](https://theanalyst.com/2024/01/club-rugby-stats-hub) ou [TOP14](https://top14.lnr.fr/calendrier-et-resultats) proposent un accès aux résultats du TOP14 et à des statistiques plus détaillées. Notre démarche de les contacter pour obtenir des données n'ayant pas donné suite, nous avons cherché à rendre avant tout accessible et reproductible de telles données avant de pouvoir travailler dessus. Notre objectif de modélisation est quant à lui de prédire les résultats de la saison en cours. 
 
 + Sources des Données
 
