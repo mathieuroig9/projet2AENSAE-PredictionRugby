@@ -202,11 +202,5 @@ def plot_club_evolution(nom, tab_classement, tab_resultats):
 plot_club_evolution("Stade toulousain", tab_evolution_classement_global, tab_forme_global)
 plot_club_evolution("USA Perpignan", tab_evolution_classement_global, tab_forme_global)
 
-toulouse=club("Stade toulousain", tab_presentation_global, tab_classement_global)
-perpignan=club("USA Perpignan", tab_presentation_global, tab_classement_global)
-
-
-#import code
-#code.interact(local=locals())
-
-
+#toulouse=club("Stade toulousain", tab_presentation_global, tab_classement_global)
+#perpignan=club("USA Perpignan", tab_presentation_global, tab_classement_global)
