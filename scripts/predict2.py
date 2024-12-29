@@ -1,5 +1,6 @@
 from scrapData import data2325, data2223, data2122, data2021, data1920, data1619
 from cleanData import nettoyage
+from predict import mapping
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -83,9 +84,19 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
+# Liste des DataFrames
+tableau = [t1, t2, t3, t4, t5, t6, t7, t8, t9]
+
+# Appliquer le mapping sur la première colonne et la première ligne pour uniformiser les noms
+for tab in tableau:
+    tab[0] = tab[0].replace(mapping)
+    tab.iloc[0, :] = tab.iloc[0, :].replace(mapping)
 
 
-def complete_t9_resultats(t5,t6,t7,t8,t9):
+
+
+
+def complete_t9_resultats(t1,t2,t3,t4,t5,t6,t7,t8,t9):
     """
     Complète les cases JX de t9 avec des scores prédits basés sur les tableaux historiques t1 à t8.
 
@@ -97,20 +108,40 @@ def complete_t9_resultats(t5,t6,t7,t8,t9):
     - t9 complété avec les scores sous la forme "XX-YY".
     """
     # Fusionner les tableaux historiques pour créer une base de données unique
-    historical_tables = [t5,t6,t7,t8]
+    historical_tables = [t1,t2,t3,t4,t5,t6,t7,t8]
     historical_data = []
 
     for table in historical_tables:
-        for i, row in table.iterrows():
+       for i, row in table.iterrows():
             for j, value in enumerate(row):
-                if isinstance(value, str) and '-' in value:
-                    score_a, score_b = map(int, value.split('-'))
+                # Vérifier si la valeur est une chaîne non vide après nettoyage
+                if isinstance(value, str) and value.strip() != '':
+                    # Vérifier si la valeur a le format attendu (par exemple "10-5")
+                    if '-' in value:
+                        try:
+                            score_a, score_b = map(int, value.split('-'))
+                        except ValueError:
+                            # Si l'analyse échoue, on remplace par 0-0 
+                            score_a, score_b = 0, 0
+                    else:
+                        # Si la valeur ne contient pas de tiret, on remplace également par 0-0
+                        score_a, score_b = 0, 0
                     historical_data.append({
                         'team_a': table.iloc[i, 0],
                         'team_b': table.columns[j],
                         'score_a': score_a,
                         'score_b': score_b,
                     })
+                else:
+                    # Si la valeur est vide ou n'est pas du bon format, on remplace par 0-0
+                    score_a, score_b = 0, 0
+                    historical_data.append({
+                        'team_a': table.iloc[i, 0],
+                        'team_b': table.columns[j],
+                        'score_a': score_a,
+                        'score_b': score_b,
+                    })
+
 
     historical_df = pd.DataFrame(historical_data)
 
@@ -226,6 +257,6 @@ def resultat_equipe(club, t):
     
     return t_resultat
 
-t9=complete_t9_resultats(t5,t6,t7,t8,t9)
+t9=complete_t9_resultats(t1,t2,t3,t4,t5,t6,t7,t8,t9)
 
-r=resultat_equipe("Stade toulousain",t9)
+r=resultat_equipe("USA Perpignan",t9)
