@@ -261,7 +261,11 @@ def evol_classement_prédit(Nom_de_léquipe,année): # On choisit l'équipe que 
     val_réel = []
     tab2 = X[(X['année'] == année) & (X['Club'] == Nom_de_léquipe) ].reset_index(drop=True) 
     for i in range(26,0,-1):
-        val_réel.append(tab2[f'J{25}_x'])
+        if i == 26 :
+            val_réel.append(tab2[f'J{25}_x'])
+        else :
+            val_réel.append(tab2[f'J{i}_x'])
+
 
          
     plt.figure(figsize=(10, 5))
