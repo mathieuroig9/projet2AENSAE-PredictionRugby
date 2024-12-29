@@ -141,14 +141,14 @@ def club(nom, tab_presentation_global, tab_classement_global):
 def plot_club_evolution(nom, tab_classement, tab_resultats):
     tab_resultats = tab_resultats.iloc[:, :-3]
     # Partie 1 : Evolution du classement
-    club_classement = tab_classement[tab_classement["Equipes/Journées"] == nom]
+    club_classement = tab_classement[tab_classement["Club"] == nom]
 
     if club_classement.empty:
         print(f"Aucune donnée de classement trouvée pour le club : {nom}")
         return
 
     years_classement = club_classement["année"].values
-    classement_transposed = club_classement.drop(columns=["Equipes/Journées", "année"]).transpose()
+    classement_transposed = club_classement.drop(columns=["Club", "année"]).transpose()
     classement_transposed.columns = years_classement
 
     plt.figure(figsize=(12, 6))
@@ -166,14 +166,14 @@ def plot_club_evolution(nom, tab_classement, tab_resultats):
     plt.show()
 
     # Partie 2 : Evolution cumulée des résultats
-    club_resultats = tab_resultats[tab_resultats["Equipes/Journées"] == nom]
+    club_resultats = tab_resultats[tab_resultats["Club"] == nom]
 
     if club_resultats.empty:
         print(f"Aucune donnée de résultats trouvée pour le club : {nom}")
         return
 
     years_resultats = club_resultats["année"].values
-    resultats_data = club_resultats.drop(columns=["Equipes/Journées", "année"])
+    resultats_data = club_resultats.drop(columns=["Club", "année"])
 
     plt.figure(figsize=(12, 6))
     for i, year in enumerate(years_resultats):
