@@ -9,3 +9,13 @@ subprocess
 numpy
 matplotlib
 seaborn
+
+RandomForestRegressor
+train_test_split
+mean_absolute_error 
+mean_squared_error
+SimpleImputer
+OneHotEncoder
+ColumnTransformer
+Pipeline
+StandardScaler
