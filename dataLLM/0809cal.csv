@@ -1,0 +1,27 @@
+,Bayonne,Biarritz,Bourgoin,Brive,Castres,Clermont,Dax,Mont de Marsan,Montauban,Montpellier,Stade Français,Stade Toulousain,Toulon,USAP
+Journée 1,castres,BOURGOIN,biarritz,usap,BAYONNE,toulon,STADE FRANÇAIS,montauban,MONT DE MARSAN,STADE TOULOUSAIN,dax,montpellier,CLERMONT,BRIVE
+Journée 2,MONTAUBAN,CASTRES,USAP,toulon,biarritz,MONTPELLIER,stade toulousain,stade français,bayonne,clermont,MONT DE MARSAN,DAX,BRIVE,bourgoin
+Journée 3,CLERMONT,stade toulousain,montauban,CASTRES,brive,bayonne,MONTPELLIER,TOULON,BOURGOIN,dax,usap,BIARRITZ,mont de marsan,STADE FRANÇAIS
+Journée 4,usap,BRIVE,MONT DE MARSAN,biarritz,DAX,STADE TOULOUSAIN,castres,bourgoin,montpellier,MONTAUBAN,toulon,clermont,STADE FRANÇAIS,BAYONNE
+Journée 5,MONT DE MARSAN,dax,toulon,stade français,CLERMONT,castres,BIARRITZ,bayonne,STADE TOULOUSAIN,USAP,BRIVE,montauban,BOURGOIN,montpellier
+Journée 6,TOULON,clermont,STADE FRANÇAIS,DAX,montauban,BIARRITZ,brive,MONTPELLIER,CASTRES,mont de marsan,bourgoin,USAP,bayonne,stade toulousain
+Journée 7,dax,MONTPELLIER,CLERMONT,MONT DE MARSAN,STADE TOULOUSAIN,bourgoin,BAYONNE,brive,stade français,biarritz,MONTAUBAN,castres,usap,TOULON
+Journée 8,BRIVE,mont de marsan,montpellier,bayonne,toulon,MONTAUBAN,usap,BIARRITZ,clermont,BOURGOIN,STADE TOULOUSAIN,stade français,CASTRES,DAX
+Journée 9,biarritz,BAYONNE,dax,stade toulousain,MONTPELLIER,STADE FRANÇAIS,BOURGOIN,USAP,TOULON,castres,clermont,BRIVE,montauban,mont de marsan
+Journée 10,bourgoin,usap,BAYONNE,CLERMONT,MONT DE MARSAN,brive,MONTAUBAN,castres,dax,STADE FRANÇAIS,montpellier,TOULON,stade toulousain,BIARRITZ
+Journée 11,MONTPELLIER,toulon,STADE TOULOUSAIN,MONTAUBAN,stade français,USAP,mont de marsan,DAX,brive,bayonne,CASTRES,bourgoin,BIARRITZ,clermont
+Journée 12,stade toulousain,STADE FRANÇAIS,castres,montpellier,BOURGOIN,mont de marsan,toulon,CLERMONT,USAP,BRIVE,biarritz,BAYONNE,DAX,montauban
+Journée 13,stade français,montauban,brive,BOURGOIN,usap,dax,CLERMONT,stade toulousain,BIARRITZ,TOULON,BAYONNE,MONT DE MARSAN,montpellier,CASTRES
+Journée 14,CASTRES,bourgoin,BIARRITZ,USAP,bayonne,TOULON,stade français,MONTAUBAN,mont de marsan,stade toulousain,DAX,MONTPELLIER,clermont,brive
+Journée 15,montauban,castres,usap,TOULON,BIARRITZ,montpellier,STADE TOULOUSAIN,STADE FRANÇAIS,BAYONNE,CLERMONT,mont de marsan,dax,brive,BOURGOIN
+Journée 16,clermont,STADE TOULOUSAIN,MONTAUBAN,castres,BRIVE,BAYONNE,montpellier,toulon,bourgoin,DAX,USAP,biarritz,MONT DE MARSAN,stade français
+Journée 17,USAP,brive,mont de marsan,BIARRITZ,dax,stade toulousain,CASTRES,BOURGOIN,MONTPELLIER,montauban,TOULON,CLERMONT,stade français,bayonne
+Journée 18,mont de marsan,DAX,TOULON,STADE FRANÇAIS,clermont,CASTRES,biarritz,BAYONNE,stade toulousain,usap,brive,MONTAUBAN,bourgoin,MONTPELLIER
+Journée 19,toulon,CLERMONT,stade français,dax,MONTAUBAN,biarritz,BRIVE,montpellier,castres,MONT DE MARSAN,BOURGOIN,usap,BAYONNE,STADE TOULOUSAIN
+Journée 20,DAX,montpellier,clermont,mont de marsan,stade toulousain,BOURGOIN,bayonne,BRIVE,STADE FRANÇAIS,BIARRITZ,montauban,CASTRES,USAP,toulon
+Journée 21,brive,MONT DE MARSAN,MONTPELLIER,BAYONNE,TOULON,montauban,USAP,biarritz,CLERMONT,bourgoin,stade toulousain,STADE FRANÇAIS,castres,dax
+Journée 22,BIARRITZ,bayonne,DAX,STADE TOULOUSAIN,montpellier,stade français,bourgoin,usap,toulon,CASTRES,CLERMONT,brive,MONTAUBAN,MONT DE MARSAN
+Journée 23,BOURGOIN,USAP,bayonne,clermont,mont de marsan,BRIVE,montauban,CASTRES,DAX,stade français,MONTPELLIER,toulon,STADE TOULOUSAIN,biarritz
+Journée 24,montpellier,TOULON,stade toulousain,montauban,STADE FRANÇAIS,usap,MONT DE MARSAN,dax,BRIVE,BAYONNE,castres,BOURGOIN,biarritz,CLERMONT
+Journée 25,STADE TOULOUSAIN,stade français,CASTRES,MONTPELLIER,bourgoin,MONT DE MARSAN,TOULON,clermont,usap,brive,BIARRITZ,bayonne,dax,MONTAUBAN
+Journée 26,STADE FRANÇAIS,MONTAUBAN,BRIVE,bourgoin,USAP,DAX,clermont,STADE TOULOUSAIN,biarritz,toulon,bayonne,mont de marsan,MONTPELLIER,castres

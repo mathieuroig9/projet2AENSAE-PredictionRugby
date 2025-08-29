@@ -1,0 +1,183 @@
+Journée,home,away
+Journée 1,Stade français Paris,US Montauban
+Journée 1,USA Perpignan,Aviron bayonnais
+Journée 1,Castres olympique,Section paloise
+Journée 1,Lyon OU,Racing 92
+Journée 1,Montpellier HR,RC Toulon
+Journée 1,Union Bordeaux Bègles,Stade rochelais
+Journée 1,ASM Clermont,Stade toulousain
+Journée 2,RC Toulon,Castres olympique
+Journée 2,Racing 92,Union Bordeaux Bègles
+Journée 2,Stade rochelais,ASM Clermont
+Journée 2,Stade toulousain,USA Perpignan
+Journée 2,Aviron bayonnais,Montpellier HR
+Journée 2,US Montauban,Lyon OU
+Journée 2,Section paloise,Stade français Paris
+Journée 3,ASM Clermont,Section paloise
+Journée 3,Union Bordeaux Bègles,US Montauban
+Journée 3,Castres olympique,Aviron bayonnais
+Journée 3,Lyon OU,Stade français Paris
+Journée 3,USA Perpignan,Racing 92
+Journée 3,Montpellier HR,Stade toulousain
+Journée 3,RC Toulon,Stade rochelais
+Journée 4,Aviron bayonnais,RC Toulon
+Journée 4,Stade toulousain,Castres olympique
+Journée 4,US Montauban,Montpellier HR
+Journée 4,Racing 92,ASM Clermont
+Journée 4,Section paloise,Lyon OU
+Journée 4,Stade rochelais,USA Perpignan
+Journée 4,Stade français Paris,Union Bordeaux Bègles
+Journée 5,Union Bordeaux Bègles,Lyon OU
+Journée 5,RC Toulon,Section paloise
+Journée 5,Montpellier HR,Stade rochelais
+Journée 5,USA Perpignan,Stade français Paris
+Journée 5,ASM Clermont,US Montauban
+Journée 5,Aviron bayonnais,Stade toulousain
+Journée 5,Castres olympique,Racing 92
+Journée 6,ASM Clermont,RC Toulon
+Journée 6,Lyon OU,USA Perpignan
+Journée 6,Racing 92,Montpellier HR
+Journée 6,Section paloise,Aviron bayonnais
+Journée 6,Stade français Paris,Stade rochelais
+Journée 6,Stade toulousain,Union Bordeaux Bègles
+Journée 6,US Montauban,Castres olympique
+Journée 7,Stade rochelais,US Montauban
+Journée 7,USA Perpignan,Union Bordeaux Bègles
+Journée 7,Section paloise,Stade toulousain
+Journée 7,Aviron bayonnais,ASM Clermont
+Journée 7,Montpellier HR,Lyon OU
+Journée 7,Castres olympique,Stade français Paris
+Journée 7,RC Toulon,Racing 92
+Journée 8,ASM Clermont,Castres olympique
+Journée 8,Union Bordeaux Bègles,Aviron bayonnais
+Journée 8,Stade toulousain,RC Toulon
+Journée 8,US Montauban,USA Perpignan
+Journée 8,Racing 92,Section paloise
+Journée 8,Lyon OU,Stade rochelais
+Journée 8,Stade français Paris,Montpellier HR
+Journée 9,Aviron bayonnais,US Montauban
+Journée 9,Montpellier HR,ASM Clermont
+Journée 9,RC Toulon,Lyon OU
+Journée 9,Stade rochelais,Racing 92
+Journée 9,Section paloise,USA Perpignan
+Journée 9,Stade toulousain,Stade français Paris
+Journée 9,Castres olympique,Union Bordeaux Bègles
+Journée 10,Union Bordeaux Bègles,Section paloise
+Journée 10,USA Perpignan,Montpellier HR
+Journée 10,US Montauban,Stade toulousain
+Journée 10,Stade rochelais,Castres olympique
+Journée 10,Racing 92,Aviron bayonnais
+Journée 10,Lyon OU,ASM Clermont
+Journée 10,Stade français Paris,RC Toulon
+Journée 11,Montpellier HR,Union Bordeaux Bègles
+Journée 11,RC Toulon,US Montauban
+Journée 11,Section paloise,Stade rochelais
+Journée 11,Stade toulousain,Racing 92
+Journée 11,Castres olympique,USA Perpignan
+Journée 11,Aviron bayonnais,Lyon OU
+Journée 11,ASM Clermont,Stade français Paris
+Journée 12,Lyon OU,Stade toulousain
+Journée 12,Montpellier HR,Castres olympique
+Journée 12,Stade français Paris,Racing 92
+Journée 12,Stade rochelais,Aviron bayonnais
+Journée 12,Union Bordeaux Bègles,RC Toulon
+Journée 12,US Montauban,Section paloise
+Journée 12,USA Perpignan,ASM Clermont
+Journée 13,Racing 92,US Montauban
+Journée 13,Section paloise,Montpellier HR
+Journée 13,Stade toulousain,Stade rochelais
+Journée 13,RC Toulon,USA Perpignan
+Journée 13,Aviron bayonnais,Stade français Paris
+Journée 13,ASM Clermont,Union Bordeaux Bègles
+Journée 13,Castres olympique,Lyon OU
+Journée 14,US Montauban,ASM Clermont
+Journée 14,Union Bordeaux Bègles,Racing 92
+Journée 14,Stade rochelais,RC Toulon
+Journée 14,USA Perpignan,Stade toulousain
+Journée 14,Montpellier HR,Aviron bayonnais
+Journée 14,Lyon OU,Section paloise
+Journée 14,Stade français Paris,Castres olympique
+Journée 15,Aviron bayonnais,Castres olympique
+Journée 15,ASM Clermont,Stade rochelais
+Journée 15,RC Toulon,Montpellier HR
+Journée 15,Stade toulousain,Section paloise
+Journée 15,Union Bordeaux Bègles,Stade français Paris
+Journée 15,USA Perpignan,US Montauban
+Journée 15,Racing 92,Lyon OU
+Journée 16,Stade rochelais,Lyon OU
+Journée 16,Section paloise,RC Toulon
+Journée 16,Stade toulousain,Aviron bayonnais
+Journée 16,US Montauban,Union Bordeaux Bègles
+Journée 16,Montpellier HR,Stade français Paris
+Journée 16,Castres olympique,ASM Clermont
+Journée 16,Racing 92,USA Perpignan
+Journée 17,Aviron bayonnais,Racing 92
+Journée 17,Lyon OU,US Montauban
+Journée 17,RC Toulon,ASM Clermont
+Journée 17,Stade français Paris,Stade toulousain
+Journée 17,Union Bordeaux Bègles,Castres olympique
+Journée 17,Stade rochelais,Montpellier HR
+Journée 17,USA Perpignan,Section paloise
+Journée 18,Stade français Paris,USA Perpignan
+Journée 18,Section paloise,Union Bordeaux Bègles
+Journée 18,Montpellier HR,Racing 92
+Journée 18,Stade toulousain,US Montauban
+Journée 18,Castres olympique,Stade rochelais
+Journée 18,ASM Clermont,Aviron bayonnais
+Journée 18,Lyon OU,RC Toulon
+Journée 19,ASM Clermont,Montpellier HR
+Journée 19,Racing 92,Castres olympique
+Journée 19,RC Toulon,Stade français Paris
+Journée 19,US Montauban,Aviron bayonnais
+Journée 19,Stade rochelais,Section paloise
+Journée 19,Union Bordeaux Bègles,Stade toulousain
+Journée 19,USA Perpignan,Lyon OU
+Journée 20,USA Perpignan,RC Toulon
+Journée 20,Stade toulousain,Montpellier HR
+Journée 20,Section paloise,Racing 92
+Journée 20,Castres olympique,US Montauban
+Journée 20,Lyon OU,Union Bordeaux Bègles
+Journée 20,Aviron bayonnais,Stade rochelais
+Journée 20,Stade français Paris,ASM Clermont
+Journée 21,Stade rochelais,Union Bordeaux Bègles
+Journée 21,Racing 92,Stade français Paris
+Journée 21,Montpellier HR,USA Perpignan
+Journée 21,US Montauban,RC Toulon
+Journée 21,Aviron bayonnais,Section paloise
+Journée 21,ASM Clermont,Lyon OU
+Journée 21,Castres olympique,Stade toulousain
+Journée 22,Lyon OU,Castres olympique
+Journée 22,RC Toulon,Aviron bayonnais
+Journée 22,Stade français Paris,Section paloise
+Journée 22,Stade toulousain,ASM Clermont
+Journée 22,Union Bordeaux Bègles,Montpellier HR
+Journée 22,USA Perpignan,Stade rochelais
+Journée 22,US Montauban,Racing 92
+Journée 23,RC Toulon,Stade toulousain
+Journée 23,Stade français Paris,Lyon OU
+Journée 23,Racing 92,Stade rochelais
+Journée 23,Section paloise,Castres olympique
+Journée 23,Aviron bayonnais,Union Bordeaux Bègles
+Journée 23,ASM Clermont,USA Perpignan
+Journée 23,Montpellier HR,US Montauban
+Journée 24,Castres olympique,Montpellier HR
+Journée 24,Lyon OU,Aviron bayonnais
+Journée 24,Racing 92,RC Toulon
+Journée 24,Section paloise,ASM Clermont
+Journée 24,Stade rochelais,Stade toulousain
+Journée 24,Union Bordeaux Bègles,USA Perpignan
+Journée 24,US Montauban,Stade français Paris
+Journée 25,USA Perpignan,Castres olympique
+Journée 25,US Montauban,Stade rochelais
+Journée 25,Stade toulousain,Lyon OU
+Journée 25,Montpellier HR,Section paloise
+Journée 25,RC Toulon,Union Bordeaux Bègles
+Journée 25,ASM Clermont,Racing 92
+Journée 25,Stade français Paris,Aviron bayonnais
+Journée 26,Union Bordeaux Bègles,ASM Clermont
+Journée 26,Aviron bayonnais,USA Perpignan
+Journée 26,Castres olympique,RC Toulon
+Journée 26,Lyon OU,Montpellier HR
+Journée 26,Racing 92,Stade toulousain
+Journée 26,Section paloise,US Montauban
+Journée 26,Stade rochelais,Stade français Paris
