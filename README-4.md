@@ -4,18 +4,18 @@ Projet de statistiques et de Machine Learning appliqué au championnat de France
 
 ## 🎯 Objectif
 
-Étudier l’évolution du championnat depuis 2005 à travers :
-1. **Collecte et nettoyage des données** (Wikipedia, reconstruction des tableaux manquants).
+Étudier l’évolution du championnat à travers un projet de bout en bout qui passe par :
+1. **Collecte et nettoyage des données** (webscrapping, reconstruction des données manquantes).
 2. **Visualisations** pour suivre budgets, performances et classements.
-3. **Prédictions** avec deux axes :
-   - Prédire le **champion** d’une saison à partir des données disponibles.
-   - Prédire le **classement de la saison suivante** grâce à un modèle d’Elo enrichi.
+3. **Prédictions** selon deux axes :
+   - Prédire le **champion** d’une saison à la fin des phases régulières.
+   - Prédire le **résultat des prochaines rencontres** grâce à un modèle d’Elo.
 
 ---
 
 ## 📊 Données
 
-Les données proviennent des pages Wikipédia du TOP 14 (2005–2025), complétées et uniformisées.  
+Les données proviennent des pages Wikipédia du TOP 14 (2005–2025). Le scrapping des données a demandé des étapes de nettoyage, d'uniformisation et de reconstruction.
 Cinq tableaux principaux sont exploités pour chaque saison :
 
 - **Présentation** (budget, entraîneur, stade, classement précédent, etc.)
@@ -24,11 +24,6 @@ Cinq tableaux principaux sont exploités pour chaque saison :
 - **Forme** (séquences victoire/nul/défaite)
 - **Résultats** (scores domicile/extérieur)
 
-Nettoyage réalisé :
-- Uniformisation des noms de clubs (≈150 noms ramenés à 30 équipes).
-- Suppression des notes et colonnes parasites.
-- Reconstruction de données manquantes (ex : évolution/forme avant 2015-2016).
-
 ---
 
 ## 📈 Visualisations
@@ -36,7 +31,7 @@ Nettoyage réalisé :
 Quelques analyses descriptives :
 - Évolution du **budget moyen** des clubs (+100% en 15 ans).
 - Suivi du **classement des clubs dominants** (Toulouse, Toulon, La Rochelle, Bordeaux).
-- Étude de la **forme saisonnière** (impact limité du Tournoi des 6 Nations pour Toulouse).
+- Étude de la **forme saisonnière** (impact limité des compétitions internationales sur Toulouse).
 - Périodes de domination : Toulon (2013–2015), Toulouse (dernières saisons).
 
 ---
@@ -71,44 +66,10 @@ L’objectif : déterminer si on peut prévoir le vainqueur des phases finales e
 - Sous-estimation de Bayonne (mercato sous-évalué).
 
 ### Saison 2025/2026 (projection)
-- Classement prédit :  
-  1. Toulouse  
-  2. Bordeaux  
-  3. La Rochelle  
-  4. Toulon  
-  5. Bayonne  
-  6. Clermont  
-  7. Pau  
-  …  
-  14. Montauban  
+- Pronostics de (victoire,nul,défaite) pour les rencontres de l'année en cours.
+- Elo mis à jour à chaque journée.
+- Prédictions publiées hebdomadairement sur X.
 
-- Attribution de **probabilités de victoire** par match (modèle de Davidson avec nul).
-- Elo mis à jour à chaque journée → permet de recalculer le classement dynamique.
-
----
-
-## 🚀 Utilisation
-
-Notebook principal : **`main.ipynb`**
-
-### Installation
-```bash
-pip install -r requirements.txt
-python -m spacy download en_core_web_sm
-```
-
-### Exécution
-Ouvrir le notebook et lancer les cellules pour :
-- Charger les données nettoyées.
-- Visualiser budgets, classements et performances.
-- Tester les modèles de prédiction.
-
----
-
-## 🔮 Perspectives
-- Intégrer des données **joueurs/transferts** plus fines.
-- Étendre aux compétitions européennes.
-- Publier les prédictions mises à jour à chaque journée sur une page dédiée.
 
 ---
 
